@@ -40,40 +40,39 @@
         <section id="booking-form">
             <h3>احجز الآن</h3>
             <form id="bookingForm" onsubmit="sendToWhatsApp(event)">
-    <label for="name">الاسم:</label>
-    <input type="text" id="name" name="name" required>
-
-    <button type="submit">إرسال</button>
-</form>
-
-<script>
-    function sendToWhatsApp(event) {
-        event.preventDefault();
-
-        const name = document.getElementById('name').value;
-
-        // Send the data to the PHP script
-        fetch('send-whatsapp.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `name=${encodeURIComponent(name)}`,
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('تم الإرسال بنجاح!');
-            } else {
-                alert('حدث خطأ.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('حدث خطأ.');
-        });
-    }
-</script>
+                <label for="name">الاسم:</label>
+                <input type="text" id="name" name="name" required>
+            
+                <button type="submit">إرسال</button>
+            </form>
+            
+            <script>
+                function sendToWhatsApp(event) {
+                    event.preventDefault();
+            
+                    const name = document.getElementById('name').value;
+            
+                    const message = `New Booking Request: Name: ${name}`.replace(/\n/g, '%0A');
+                    const phoneNumber = '+905522830176';
+                    const apiKey = '8055273';
+                    const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(phoneNumber)}&text=${encodeURIComponent(message)}&apikey=${apiKey}`;
+            
+                    console.log('API URL:', url);
+            
+                    fetch(url)
+                        .then(response => {
+                            if (response.ok) {
+                                alert('تم الإرسال بنجاح!');
+                            } else {
+                                alert('حدث خطأ.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('حدث خطأ.');
+                        });
+                }
+            </script>
     </main>
 </body>
 </html>
