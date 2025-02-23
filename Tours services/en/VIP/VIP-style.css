@@ -1,14 +1,17 @@
 /* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Ensure the background color covers the full page */
+html, body {
+    height: 100%; /* Make sure both html and body take up the full height */
+    margin: 0; /* Remove default browser margins */
+    padding: 0; /* Remove default browser padding */
 }
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #fff; /* White background */
+    background-color: #f9f9f9; /* Light gray background for the full page */
     color: #333; /* Dark gray text for readability */
+    display: flex; /* Use flexbox to align content */
+    flex-direction: column; /* Stack header, main, and footer vertically */
 }
 
 /* Header Styling */
