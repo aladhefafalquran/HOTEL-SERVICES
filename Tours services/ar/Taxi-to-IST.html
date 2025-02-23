@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خدمة سيارة الأجرة إلى مطار إسطنبول</title>
+    <link rel="stylesheet" href="Taxi-to-IST.css" />
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="../hotel-logo.png" alt="شعار الفندق">
+        </div>
+        <div class="hotel-name">
+            <h1>اسم الفندق</h1>
+        </div>
+        <nav>
+            <button onclick="window.location.href='main.html'">العودة</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section id="service-explanation" dir="rtl">
+            <h2>خدمة سيارة الأجرة إلى مطار إسطنبول</h2>
+            <p>
+                نقدم لكم خدمة سيارة الأجرة المريحة والآمنة من الفندق إلى مطار إسطنبول. تكلفة الخدمة هي <strong>1500 ليرة تركية</strong>، ويمكنكم الدفع نقدًا بالعملات التالية: 
+                <strong>ليرة تركية (TL)، دولار أمريكي (USD)، أو يورو (EUR)</strong> عند الاستقبال.
+            </p>
+            <p>
+                قد تكون خدمتنا أغلى قليلاً مقارنة بخدمات مثل Uber، لكنها أكثر أمانًا وتضمن لكم تجربة خالية من المشاكل مع السائقين. نحرص على تقديم خدمة ذات جودة عالية لضمان راحتكم وسلامتكم.
+            </p>
+            <p>
+                إذا كنت تبحث عن خدمة موثوقة ومريحة، فإن خيارنا هو الأفضل لك!
+            </p>
+        </section>
+
+        <!-- Booking Form Section -->
+        <section id="booking-form">
+            <h3>احجز الآن</h3>
+            <form id="bookingForm" onsubmit="sendToWhatsApp(event)">
+                <label for="name">الاسم:</label>
+                <input type="text" id="name" name="name" required>
+            
+                <button type="submit">إرسال</button>
+            </form>
+            
+            <script>
+                function sendToWhatsApp(event) {
+                    event.preventDefault();
+            
+                    const name = document.getElementById('name').value;
+            
+                    const message = `New Booking Request: Name: ${name}`.replace(/\n/g, '%0A');
+                    const phoneNumber = '+905522830176';
+                    const apiKey = '8055273';
+                    const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(phoneNumber)}&text=${encodeURIComponent(message)}&apikey=${apiKey}`;
+            
+                    console.log('API URL:', url);
+            
+                    fetch(url)
+                        .then(response => {
+                            if (response.ok) {
+                                alert('تم الإرسال بنجاح!');
+                            } else {
+                                alert('حدث خطأ.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('حدث خطأ.');
+                        });
+                }
+            </script>
+    </main>
+</body>
+</html>
