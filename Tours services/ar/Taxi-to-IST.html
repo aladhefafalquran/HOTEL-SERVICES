@@ -58,39 +58,35 @@
             <script>
                 function sendToWhatsApp(event) {
                     event.preventDefault();
-
+            
                     // Get form values
                     const name = document.getElementById('name').value;
                     const phone = document.getElementById('phone').value;
                     const date = document.getElementById('date').value;
                     const room = document.getElementById('room').value;
-
-                    // Construct the message
-                    const message = `
-                        New Booking Request:
-                        Name: ${name}
-                        Phone: ${phone}
-                        Date: ${date}
-                        Room Number: ${room}
-                    `.trim().replace(/\n/g, '%0A'); // Replace newlines with %0A for URL encoding
-
-                    // CallMeBot API details
-                    const phoneNumber = '+905522830176'; // Your WhatsApp number
-                    const apiKey = '8055273'; // Your CallMeBot API key
-                    const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(phoneNumber)}&text=${encodeURIComponent(message)}&apikey=${apiKey}`;
-
-                    // Open the API link in a new tab
-                    const newTab = window.open(url, '_blank');
-
-                    // Close the tab and redirect after 500ms (0.5 seconds)
+            
+                    // Format the message
+                    const message = `🚖 *طلب حجز تاكسي إلى المطار* 🚖%0A%0A`
+                                  + `👤 *الاسم:* ${name}%0A`
+                                  + `📞 *رقم الهاتف:* ${phone}%0A`
+                                  + `📅 *التاريخ:* ${date}%0A`
+                                  + `🏨 *رقم الغرفة:* ${room}%0A`
+                                  + `%0A🛫 *يرجى التأكيد في أقرب وقت ممكن!*`;
+            
+                    // WhatsApp number (replace with your own, without +)
+                    const phoneNumber = "905522830176"; // Example: +90 552 283 0176 → 905522830176
+            
+                    // Open WhatsApp with the message pre-filled
+                    const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+                    window.location.href = whatsappURL; // Open WhatsApp
+            
+                    // Redirect to the thank-you page after 5 seconds
                     setTimeout(() => {
-                        if (newTab) {
-                            newTab.close(); // Close the API tab
-                        }
-                        window.location.href = "thank-you.html"; // Redirect to the thank-you page
-                    }, 50); // Wait 0.5 seconds
+                        window.location.href = "thank-you.html";
+                    }, 5000);
                 }
             </script>
+            
         </section>
     </main>
 </body>
