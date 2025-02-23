@@ -42,37 +42,56 @@
             <form id="bookingForm" onsubmit="sendToWhatsApp(event)">
                 <label for="name">الاسم:</label>
                 <input type="text" id="name" name="name" required>
-            
+
+                <label for="phone">رقم الهاتف:</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <label for="date">التاريخ:</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="room">رقم الغرفة:</label>
+                <input type="text" id="room" name="room" required>
+
                 <button type="submit">إرسال</button>
             </form>
-            
+
             <script>
                 function sendToWhatsApp(event) {
                     event.preventDefault();
-            
+
+                    // Get form values
                     const name = document.getElementById('name').value;
-            
-                    const message = `New Booking Request: Name: ${name}`.replace(/\n/g, '%0A');
-                    const phoneNumber = '+905522830176';
-                    const apiKey = '8055273';
+                    const phone = document.getElementById('phone').value;
+                    const date = document.getElementById('date').value;
+                    const room = document.getElementById('room').value;
+
+                    // Construct the message
+                    const message = `
+                        New Booking Request:
+                        Name: ${name}
+                        Phone: ${phone}
+                        Date: ${date}
+                        Room Number: ${room}
+                    `.trim().replace(/\n/g, '%0A'); // Replace newlines with %0A for URL encoding
+
+                    // CallMeBot API details
+                    const phoneNumber = '+905522830176'; // Your WhatsApp number
+                    const apiKey = '8055273'; // Your CallMeBot API key
                     const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(phoneNumber)}&text=${encodeURIComponent(message)}&apikey=${apiKey}`;
-            
-                    console.log('API URL:', url);
-            
-                    fetch(url)
-                        .then(response => {
-                            if (response.ok) {
-                                alert('تم الإرسال بنجاح!');
-                            } else {
-                                alert('حدث خطأ.');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('حدث خطأ.');
-                        });
+
+                    // Open the API link in a new tab
+                    const newTab = window.open(url, '_blank');
+
+                    // Close the tab and redirect after 500ms (0.5 seconds)
+                    setTimeout(() => {
+                        if (newTab) {
+                            newTab.close(); // Close the API tab
+                        }
+                        window.location.href = "thank-you.html"; // Redirect to the thank-you page
+                    }, 50); // Wait 0.5 seconds
                 }
             </script>
+        </section>
     </main>
 </body>
 </html>
